@@ -6,10 +6,10 @@ import java.util.Calendar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +23,11 @@ import com.app.converter.service.FileConvertService;
 import com.app.converter.service.FileStorageService;
 import com.itextpdf.text.DocumentException;
 
+
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/converter")
+
 public class FileController {
 
 	private static final Logger logger = LoggerFactory.getLogger(FileController.class);
@@ -37,7 +40,7 @@ public class FileController {
 
 	private Calendar calender = Calendar.getInstance();
 
-	@PostMapping("/upload-file")
+	@PostMapping(value = "/upload-file")
 	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file)
 			throws IOException, CustomException, DocumentException {
 		logger.info("file conversion started at ", calender.getTime());

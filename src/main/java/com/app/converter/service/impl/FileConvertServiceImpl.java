@@ -1,9 +1,7 @@
 package com.app.converter.service.impl;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -20,19 +18,17 @@ import com.itextpdf.text.DocumentException;
 @Service
 public class FileConvertServiceImpl implements FileConvertService {
 	private static final String FILE_WRITE_LOCATION = "src/main/resources/files/";
-	private Converter converter = null;
 
 	@Override
 	public String convert(MultipartFile file)
-			throws CustomException, FileNotFoundException, MalformedURLException, DocumentException, IOException {
+			throws CustomException, DocumentException, IOException {
 
 		if (file == null || file.isEmpty()) {
 			throw new CustomException("", "File is empty");
 		}
 		String fileName = file.getOriginalFilename();
-		System.out.println(fileName);
 		Document document = new Document();
-		converter = ConverterFactory.getInstance(fileName);
+		Converter converter = ConverterFactory.getInstance(fileName);
 		return converter.convert(document, fileName);
 	}
 
